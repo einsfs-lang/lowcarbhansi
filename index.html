@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Low-Carb-Wochenpläne mit Rezepten und Einkaufsliste – jeden Samstag neu.">
+<meta name="theme-color" content="#2E6A4E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E6A4E'/%3E%3Ctext x='16' y='22' font-size='16' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<title>Low-Carb Hansi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F3F5F1; --surface:#FFFFFF; --ink:#1C2320; --muted:#5E6B64; --line:#DDE3DE;
+  --accent:#2E6A4E; --accent-ink:#FFFFFF; --soft:#E3EEE7;
+  --b:#B5651D; --b-soft:#F6EADF; --m:#2E6A4E; --m-soft:#E3EEE7; --a:#3F4F8C; --a-soft:#E6E9F5;
+  --prep:#8A5A00; --prep-soft:#FBF1D9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#131816; --surface:#1C2320; --ink:#E7ECE9; --muted:#9AA8A1; --line:#2C3531;
+    --accent:#7CC3A0; --accent-ink:#0F1512; --soft:#22322A;
+    --b:#E8A46A; --b-soft:#33281E; --m:#7CC3A0; --m-soft:#22322A; --a:#A7B4EE; --a-soft:#252A40;
+    --prep:#E9C26A; --prep-soft:#332B17;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#131816; --surface:#1C2320; --ink:#E7ECE9; --muted:#9AA8A1; --line:#2C3531;
+  --accent:#7CC3A0; --accent-ink:#0F1512; --soft:#22322A;
+  --b:#E8A46A; --b-soft:#33281E; --m:#7CC3A0; --m-soft:#22322A; --a:#A7B4EE; --a-soft:#252A40;
+  --prep:#E9C26A; --prep-soft:#332B17;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Source Sans 3",system-ui,sans-serif;margin:0}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:20px 48px}
+h1{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:28px;line-height:1.1;margin:0 0 4px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 16px;font-size:15px}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding-block:10px;margin-bottom:8px}
+.tab{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:8px 0 6px;font:600 15px "Source Sans 3",sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.tab small{font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tab[aria-selected="true"] small{color:var(--accent-ink);opacity:.85}
+.tab:focus-visible,.card summary:focus-visible,.ing li:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dayhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:8px 0 12px}
+.dayhead h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:22px;margin:0}
+.dayhead span{color:var(--muted);font-size:14px}
+.list{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.card summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start}
+.card summary::-webkit-details-marker{display:none}
+.kind{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;justify-self:start}
+.k-b{color:var(--b);background:var(--b-soft)} .k-m{color:var(--m);background:var(--m-soft)} .k-a{color:var(--a);background:var(--a-soft)}
+.time{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.card h3{grid-column:1/-1;margin:2px 0 0;font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:19px;line-height:1.25;text-wrap:balance}
+.chev{grid-column:1/-1;font-size:13px;color:var(--accent);font-weight:600}
+.card[open] .chev .c{display:none} .card:not([open]) .chev .o{display:none}
+.body{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line);padding-top:14px}
+.body h4{margin:0 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ing{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ing li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);cursor:pointer;user-select:none}
+.ing li:last-child{border-bottom:0}
+.box{flex:0 0 20px;height:20px;border:1.5px solid var(--muted);border-radius:6px;margin-top:2px;display:grid;place-items:center;font-size:13px;color:var(--accent-ink)}
+.ing li.done .box{background:var(--accent);border-color:var(--accent)}
+.ing li.done .box::after{content:"✓"}
+.ing li.done .t{color:var(--muted);text-decoration:line-through}
+.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:10px}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--soft);color:var(--accent);font-weight:600;font-size:14px;display:grid;place-items:center}
+.note{background:var(--prep-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:15px}
+.note b{color:var(--prep)}
+.snacks{margin-top:20px;color:var(--muted);font-size:14px}
+@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}}
+.weekbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 4px}
+.wk{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;width:40px;height:36px;font-size:18px;cursor:pointer}
+.wk:disabled{opacity:.35;cursor:default}
+.wk:focus-visible,.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wktitle{flex:1;text-align:center;font-weight:600;font-size:14px;line-height:1.25;font-variant-numeric:tabular-nums}
+.tabs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
+.tab.shop{font-size:13px}
+.shopsec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 16px}
+.shopsec h3{margin:0 0 4px;font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:17px}
+.state{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 16px;color:var(--muted)}
+.reset{appearance:none;background:none;border:0;color:var(--accent);font:600 14px "Source Sans 3",sans-serif;cursor:pointer;padding:4px 0}
+.wk.arch{width:auto;padding:0 12px;font:600 14px "Source Sans 3",sans-serif}
+#archive{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin:8px 0 12px;overflow:hidden}
+#archive button{appearance:none;display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 16px;color:var(--ink);font:15px "Source Sans 3",sans-serif;cursor:pointer}
+#archive button:last-child{border-bottom:0}
+#archive button span{color:var(--muted);font-size:13px}
+#archive button[aria-current="true"]{background:var(--soft);font-weight:600}
+#archive button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.pdf{margin:4px 0 0;font-size:14px}.pdf a{color:var(--accent);font-weight:600}
+footer{margin-top:32px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <h1>Low-Carb Hansi</h1>
+  <p class="sub" id="note">Jeden Samstag ein neuer Wochenplan. Karte antippen für das Rezept, Zutaten antippen zum Abhaken.</p>
+  <div class="weekbar"><button class="wk" id="prev" aria-label="Vorherige Woche">‹</button><div class="wktitle" id="wktitle">Plan wird geladen …</div><button class="wk" id="next" aria-label="Nächste Woche">›</button><button class="wk arch" id="archBtn" aria-expanded="false">Archiv</button></div>
+  <div id="archive" hidden></div>
+  <p class="pdf" id="pdf"></p>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <div id="day"><div class="state">Plan wird geladen …</div></div>
+  <p class="snacks" id="snacks"></p>
+  <footer>Low-Carb Hansi · jeden Samstag ein neuer Wochenplan</footer>
+</div>
+
+<script>
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+let checked={};try{checked=JSON.parse(localStorage.getItem("lc-checked")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("lc-checked",JSON.stringify(checked))}catch(e){}};
+let weeks=[],wi=0,cur=null;
+const todayISO=(()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)})();
+
+function pickWeek(){
+  // Woche, die heute enthält (inkl. Vorbereitungs-Sonntag), sonst die nächste kommende, sonst die neueste
+  const asc=[...weeks].sort((a,b)=>a.start<b.start?-1:1);
+  let w=asc.find(x=>{const f=x.days?.[0]?.iso||x.start;return todayISO>=f&&todayISO<=x.end});
+  if(!w) w=asc.find(x=>x.start>todayISO);
+  if(!w) w=asc[asc.length-1];
+  return weeks.indexOf(w);
+}
+function renderWeek(keepTab){
+  const w=weeks[wi];if(!w)return;
+  $("wktitle").textContent=w.title||w.start;
+  $("pdf").innerHTML=w.pdf?`<a href="${esc(w.pdf)}">Diese Woche als PDF herunterladen</a>`:"";
+  if(!$("archive").hidden)renderArchive();
+  $("prev").disabled=wi>=weeks.length-1; $("next").disabled=wi<=0;
+  if(w.note)$("note").textContent=w.note+" Karte antippen für das Rezept, Zutaten antippen zum Abhaken.";
+  $("snacks").textContent=w.snacks?"Snacks bei Bedarf: "+w.snacks:"";
+  const tabs=$("tabs");tabs.innerHTML="";
+  (w.days||[]).forEach(d=>{
+    const b=document.createElement("button");b.className="tab";b.setAttribute("role","tab");b.dataset.id=d.id;
+    b.innerHTML=esc(d.short)+"<small>"+esc(d.date)+"</small>";b.onclick=()=>show(d.id);tabs.appendChild(b);
+  });
+  if(w.shopping?.length){const b=document.createElement("button");b.className="tab shop";b.setAttribute("role","tab");b.dataset.id="shop";b.innerHTML="Liste<small>Einkauf</small>";b.onclick=()=>show("shop");tabs.appendChild(b);}
+  let start=keepTab&&cur;
+  if(!start||(start!=="shop"&&!w.days.some(d=>d.id===start))){
+    const t=w.days.find(d=>d.iso===todayISO);
+    start=t?t.id:(w.days.find(d=>d.id==="mo")||w.days[0]).id;
+  }
+  show(start,true);
+}
+function show(id,noScroll){
+  const w=weeks[wi];cur=id;
+  $("tabs").querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.id===id));
+  const pre=w.start+":";
+  if(id==="shop"){
+    $("day").innerHTML=`<div class="dayhead"><h2>Einkaufsliste</h2><button class="reset" id="resetShop">Haken zurücksetzen</button></div>
+    <div class="list">${w.shopping.map((s,si)=>`<section class="shopsec"><h3>${esc(s.section)}</h3><ul class="ing">${s.items.map((x,ii)=>{const k=pre+"shop-"+si+"-"+ii;return `<li tabindex="0" data-key="${k}" class="${checked[k]?"done":""}"><span class="box"></span><span class="t">${esc(x)}</span></li>`}).join("")}</ul></section>`).join("")}</div>`;
+    $("resetShop").onclick=()=>{Object.keys(checked).forEach(k=>{if(k.startsWith(pre+"shop-"))delete checked[k]});save();show("shop",true)};
+  }else{
+    const d=w.days.find(x=>x.id===id);
+    $("day").innerHTML=`<div class="dayhead"><h2>${esc(d.title)}</h2><span>${esc(d.date)}${d.hint?" · "+esc(d.hint):""}</span></div>
+    <div class="list">${d.meals.map((m,mi)=>`
+      <details class="card">
+        <summary><span class="kind k-${esc(m.k)}">${esc(m.label)}</span><span class="time">${esc(m.time)}</span>
+          <h3>${esc(m.name)}</h3><span class="chev"><span class="c">Rezept anzeigen</span><span class="o">Rezept schließen</span></span></summary>
+        <div class="body">
+          <div><h4>Zutaten</h4><ul class="ing">${m.ing.map((x,ii)=>{const k=pre+d.id+mi+"-"+ii;return `<li tabindex="0" data-key="${k}" class="${checked[k]?"done":""}"><span class="box"></span><span class="t">${esc(x)}</span></li>`}).join("")}</ul></div>
+          <div><h4>Zubereitung</h4><ol class="steps">${m.steps.map(s=>`<li><span>${esc(s)}</span></li>`).join("")}</ol></div>
+          ${m.prep?`<div class="note"><b>Für morgen:</b> ${esc(m.prep)}</div>`:""}
+        </div>
+      </details>`).join("")}</div>`;
+  }
+  if(!noScroll)window.scrollTo({top:0});
+}
+$("day").addEventListener("click",e=>{const li=e.target.closest(".ing li");if(!li)return;li.classList.toggle("done");checked[li.dataset.key]=li.classList.contains("done");save();});
+$("day").addEventListener("keydown",e=>{const li=e.target.closest(".ing li");if(li&&(e.key===" "||e.key==="Enter")){e.preventDefault();li.click();}});
+$("prev").onclick=()=>{if(wi<weeks.length-1){wi++;renderWeek()}};
+$("next").onclick=()=>{if(wi>0){wi--;renderWeek()}};
+
+function renderArchive(){
+  const el=$("archive");
+  el.innerHTML=weeks.map((w,i)=>{const din=(w.days||[]).flatMap(d=>d.meals.filter(m=>m.k==="a").map(m=>m.name)).slice(1,3).join(", ");
+    return `<button data-i="${i}" aria-current="${i===wi}"><b>${esc(w.title)}</b><span>${esc(din)}…</span></button>`}).join("");
+}
+$("archBtn").onclick=()=>{const el=$("archive");el.hidden=!el.hidden;$("archBtn").setAttribute("aria-expanded",!el.hidden);if(!el.hidden)renderArchive();};
+$("archive").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;wi=+b.dataset.i;$("archive").hidden=true;$("archBtn").setAttribute("aria-expanded","false");renderWeek();window.scrollTo({top:0});});
+fetch("data/plans.json",{cache:"no-cache"}).then(r=>r.json()).then(list=>{
+  weeks=list.filter(w=>w&&w.days).sort((a,b)=>a.start<b.start?1:-1);
+  if(!weeks.length)throw 0;
+  wi=pickWeek();renderWeek();
+}).catch(()=>{$("wktitle").textContent="Noch kein Plan";$("day").innerHTML='<div class="state">Noch kein Plan veröffentlicht. Der nächste kommt am Samstag.</div>';});
+</script>
+
+</body>
+</html>
